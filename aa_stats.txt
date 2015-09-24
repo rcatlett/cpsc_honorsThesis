@@ -1,0 +1,9 @@
+On NCAA site:
+	GP, MP, FGM, FGA, FG%, 3FG, 3FGA, 3FG%, FT, FTA, FT%, 
+	PTS, Avg, ORebs, DRebs, TotReb, Avg, AST, TO, STL, BLK, 
+	Fouls, DblDbl, TrplDbl, DQ
+
+In Data:
+	G, MIN, FG, FGA, 3P, 3PA, FT, FTA, REB, PF, AST, TO, 
+	BLK, STL, PTS, MIN, FG%, 3P%, FT%, RPG, APG, TPG, BPG,
+	SPG, PPG
