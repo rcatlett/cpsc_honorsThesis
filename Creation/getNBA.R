@@ -33,4 +33,12 @@ NBA$PS <- gsub("[^A-Z,a-z]", NA, NBA$PS)
 for (i in 5:ncol(NBA)) {
   as.double(NBA[,i]) -> NBA[,i]
 }
+
+#Adds Efficiency rating for each player
+# EFF = (PTS + REB + AST + STL + BLK − Missed FG − Missed FT − TO) / GP
+for (i in 1:nrow(NBA)) {
+  eff <- as.double((NBA[i,"PTS"] + NBA[i,"TR"] + NBA[i,"AS"] + NBA[i,"ST"] + NBA[i,"BK"] - (NBA[i, "FGA"]-NBA[i, "FGM"]) - (NBA[i,"FTA"]- NBA[i,"FTM"]) - NBA[i,"TO"])/NBA[i,"GP"])
+  NBA[i, "EFF"] <- eff
+}
+
 rm(information, file,  filenames, i, name, year)
