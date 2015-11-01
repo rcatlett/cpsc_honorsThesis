@@ -78,4 +78,7 @@ for (i in 4:ncol(NCAA)){
 for (i in 1:2){
   as.character(NCAA[,i]) -> NCAA[,i]
 }
-
+cat("Cleaning Environment\n")
+rm(table, con, htmlData, i, let, lines, links, name, num, nums, p,
+   p_site, player, preName, site, step, tables)
+cat("Done\n")
