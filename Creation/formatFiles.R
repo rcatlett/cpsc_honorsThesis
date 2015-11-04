@@ -1,4 +1,4 @@
-/Fix all columns to have proper headers
+#Fix all columns to have proper headers
 
 filenames <- Sys.glob("y*.csv")
 for (file in filenames){
