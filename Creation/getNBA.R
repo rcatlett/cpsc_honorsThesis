@@ -5,7 +5,7 @@ filenames <- Sys.glob("y*.csv")
 NBA <- data.frame()
 for (file in filenames){
   # Reads each file - already formatted with headers
-  information <- read.csv(file, sep="", stringsAsFactor=FALSE)
+  information <- read.table(file, sep="", stringsAsFactor=FALSE, header=TRUE)
   NBA <- rbind.fill(NBA, information)
 }
 
@@ -41,4 +41,4 @@ for (i in 1:nrow(NBA)) {
   NBA[i, "EFF"] <- eff
 }
 
-rm(information, file,  filenames, i, name, year)
+rm(information, file,  filenames, i, name, year, eff)
