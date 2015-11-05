@@ -14,14 +14,14 @@ for (let in letters[1:26]){
   close(con)
   # Find all player links, then parse them
   lines <- grep(".*/cbb/players/.*[1-9].html", htmlData)
-  
+   
   # Parse player links to find repeated players
   for (i in 2:length(lines)) {
     step <-strsplit(htmlData[lines[i]], "[<>]")[[1]]
     step <- step[grep(".*cbb/players/.*",step)]
     player <- strsplit(step, '/')[[1]][4]
     player <- substring(player,1,nchar(player)-1)
-    
+     
     # If there are multiple names aka 2 Mike Smiths, put them in a bad list and skip all but the first, remove the first later
     if (strsplit(player,'[-.]')[[1]][3] != 1) {
       p <- paste(strsplit(player,'[-]')[[1]][1], strsplit(player, '[-]')[[1]][2], sep="-")
@@ -33,7 +33,6 @@ for (let in letters[1:26]){
     }
   }
 }
-
 cat("Removing Bad Names\n")
 badnames <- unique(badnames)
 nums <- c()
@@ -51,33 +50,63 @@ links <- links[-nums]
 
 cat("Getting player data\n")
 for (i in 1:length(links)) {
-  if (i%%250 == 0){
+  if (i%%500 == 0){
     print(i)
   }
   site <- links[i]
-  con <- file(site)
-  tables <- readHTMLTable(site)
+  con <- file(site) 
+  # Get page and position
+  page <- readLines(site)
+  position_loc <- page[grep(".*Position.*", page)]
+  position <- strsplit(strsplit(position_loc,  " ")[[1]][4], "<")[[1]][1]
+  if (position == "Forward"){
+    position <- "F" 
+  }
+  if (position == "Center"){
+    position <- "C" 
+  }
+  if (position == "Guard"){
+    position <- "G" 
+  }
+  if (position == "?"){
+    position <- NA 
+  }
+  tables <- readHTMLTable(site, as.data.frame=TRUE)
   close(con)
   
   #Getting the name
   preName <- strsplit(links[i],"/")[[1]][6]
   p <- strsplit(preName,"[.-]")[[1]]
-  name <- paste(p[2],p[1],sep=",")
+  name <- paste(p[2],p[1],sep=", ")
+  s <- strsplit(name, " ")[[1]]
+  name <- paste(toupper(substring(s, 1,1)), substring(s, 2),
+        sep="", collapse=" ")
   
   #Reading the table in
-  table <- cbind("Player"=name,tables$players_totals)
+  table <- cbind("Player"=name,"Position"=position, tables$players_totals)
+  
+  #Editing the table
+  #Get NAs in 
+  for (i in 1:ncol(table)){
+    as.character(table[,i]) -> table[,i]
+  }
+  for (i in 1:nrow(table)){
+    for (j in 1:ncol(table)){
+      if(table[i,j] %in% c("", " ", NA)){
+        table[i,j] <- NA 
+      }
+    }
+  }
+  
+  for (i in 6:ncol(table)){
+    as.double(table[,i]) -> table[,i]
+  }
   
   NCAA <- rbind.fill(NCAA, table)
 }
 cat("Editing\n")
-NCAA[,-c(4,28,29,30,31)]-> NCAA
+NCAA[,-c(5,29:ncol(NCAA))]-> NCAA
 
-for (i in 4:ncol(NCAA)){
-  as.double(NCAA[,i]) -> NCAA[,i]
-}
-for (i in 1:2){
-  as.character(NCAA[,i]) -> NCAA[,i]
-}
 cat("Cleaning Environment\n")
 rm(table, con, htmlData, i, let, lines, links, name, num, nums, p,
    p_site, player, preName, site, step, tables)
