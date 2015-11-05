@@ -106,7 +106,7 @@ for (i in 1:length(links)) {
 }
 cat("Editing\n")
 NCAA[,-c(5,29:ncol(NCAA))]-> NCAA
-
+NCAA <- tlb_df(NCAA)
 cat("Cleaning Environment\n")
 rm(table, con, htmlData, i, let, lines, links, name, num, nums, p,
    p_site, player, preName, site, step, tables)

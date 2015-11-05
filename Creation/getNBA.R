@@ -43,3 +43,4 @@ for (i in 1:nrow(NBA)) {
 }
 
 rm(information, file,  filenames, i, name, year, eff)
+NBA <- tlb_df(NBA)
