@@ -1,7 +1,7 @@
 require("plyr")
 
 # Create the data frame
-filenames <- Sys.glob("y*.csv")
+filenames <- Sys.glob("../BBall_Data/y*.csv")
 NBA <- data.frame()
 for (file in filenames){
   # Reads each file - already formatted with headers
