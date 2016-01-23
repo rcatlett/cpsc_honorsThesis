@@ -86,16 +86,21 @@ rbind(agg.NBA, calculated.effs)-> agg.NBA
 
 cat("Cleaning Environment\n")
 rm(max.effs, years.to.max, effAvgTop3, avg.effs, calculated.effs, players, agg.groups, aggregate.NBA)
-cat("Done\n")
-# edit this below
-# add by filtering using ond and mnd
-#aggregate.NBA[aggregate.NBA$Player%in%ond,]->ond.NBA
-#aggregate.NBA[aggregate.NBA$Player%in%mnd,]->mnd.NBA
-# check for normality (bell curve, historgram, qqplot)
-#hist(one.and.done$eff, main="EFF of ONE-AND-DONES", xlab="EFF", ylab="Frequency", xlim=c(-5,35), breaks=16, prob=TRUE)
-#lines(density(one.and.done$eff, na.rm=TRUE))
-#hist(more.and.done$eff, main="EFF of MORE-AND-DONES", xlab="EFF", ylab="Frequency", xlim=c(-5,35), breaks=16, prob=TRUE)
-#lines(density(more.and.done$eff, na.rm=TRUE))
-#summarise(group_by(NBA, Years), avg.eff=mean(EFF))->NBA.season.EFF
+cat("Done with Data\n")
 
-# run t.test
+cat("Graphing calculated Effs")
+# Viewing Hist of each
+# Average
+hist(agg.NBA[agg.NBA$quantity=="avgEff","eff"], main="Average EFF", xlim=c(-10,40), xlab="EFF", ylab="Frequency", ylim=c(0, 1000))
+# Average Top 3
+hist(agg.NBA[agg.NBA$quantity=="effAvgTop3","eff"], main="Average of Top 3 EFFs", xlim=c(-10,40), xlab="EFF", ylab="Frequency", ylim=c(0, 1000))
+# Max
+hist(agg.NBA[agg.NBA$quantity=="maxEff","eff"], main="Max Eff measure", xlim=c(-10,40), xlab="EFF", ylab="Frequency", ylim=c(0, 1000))
+# Years to Max
+hist(agg.NBA[agg.NBA$quantity=="to.max","eff"], main="Years to Max EFF", xlim=c(0,15), xlab="Years", ylab="Frequency", ylim=c(0, 1000))
+
+
+
+
+
+
