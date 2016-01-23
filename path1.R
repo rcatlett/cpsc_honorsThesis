@@ -34,6 +34,12 @@ for (p in players){
   }
 }
 
+# Tidy this data
+gather(aggregate.NBA, "year", "eff", 2:27) _. agg.NBA
+# Removing NAs
+agg.NBA[!(is.na(agg.NBA$eff)),]->agg.NBA
+rownames(agg.NBA)<-c()
+
 # edit this below
 # add by filtering using ond and mnd
 #aggregate.NBA[aggregate.NBA$Player%in%ond,]->ond.NBA
