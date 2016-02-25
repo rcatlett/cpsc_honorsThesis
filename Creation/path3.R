@@ -1,8 +1,8 @@
-#install.packages("dendextend")
-#install.packages("corrplot")
-#library(dendextend)
-#library(corrplot)
-#library(colorspace)
+install.packages("dendextend")
+install.packages("corrplot")
+library(dendextend)
+library(corrplot)
+library(colorspace)
 
 # Collect OND NCAA data
 NCAA[NCAA$Player%in%ond,]->ond.NCAA
