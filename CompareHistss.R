@@ -22,7 +22,7 @@ barplot(table(clusters.5), col=rgb(1,0,0,1/4), ylim=c(min(all.values), max(all.v
 barplot(table(weighted.5), col=rgb(0,0,1,1/4),add=T)
 legend("topright",legend=c("Results","Weighted"), fill=colvec)
 
-#compare_dendlist %>% ladderize %>% 
+#compare_dendlist %>% dendlist(which = c(1,2)) %>% ladderize %>% 
 #  set("branches_k_color", k=10) %>%
 #  tanglegram(common_subtree_color_branches = TRUE)
 barplot(table(clusters), col=rgb(1,0,0,1/4), ylim=c(min(all.values), max(all.values)), main="Compared Cluters 10")
@@ -35,33 +35,6 @@ legend("topright",legend=c("Results","Weighted"), fill=colvec)
 barplot(table(clusters.20),col=rgb(1,0,0,1/4), ylim=c(min(all.values), max(all.values)), main="Compared Cluters 20")
 barplot(table(weighted.20),col=rgb(0,0,1,1/4), add=T)
 legend("topright",legend=c("Results","Weighted"), fill=colvec)
-
-for (i in 1:10){
- # cat("T-Tests\n Cluster ", i, ": ")
-#  print(t.test(NCAA[is.element(NCAA$Player,rownames(compare[compare$clusters==i,])),"MPperG"]))
-#  cat("Weighted ",i, ": ")
-#  print(t.test(NCAA[is.element(NCAA$Player,rownames(compare[compare$weighted==i,])),"MPperG"]))
-
-  cat("Mean PTS, Scaled\n Cluster ", i, ": ")
-  print(mean(scale(NCAA[is.element(NCAA$Player,rownames(compare[compare$clusters==i,])),"PTS"]),na.rm=TRUE))
-  cat("Weighted ",i, ": ")
-  print(mean(scale(NCAA[is.element(NCAA$Player,rownames(compare[compare$weighted==i,])),"PTS"]),na.rm=TRUE))
-  
-  cat("Mean AST, Scaled\n Cluster ", i, ": ")
-  print(mean(scale(NCAA[is.element(NCAA$Player,rownames(compare[compare$clusters==i,])),"AST"]),na.rm=TRUE))
-  cat("Weighted ",i, ": ")
-  print(mean(scale(NCAA[is.element(NCAA$Player,rownames(compare[compare$weighted==i,])),"AST"]),na.rm=TRUE))
-  
-  cat("Mean TRB, Scaled\n Cluster ", i, ": ")
-  print(mean(scale(NCAA[is.element(NCAA$Player,rownames(compare[compare$clusters==i,])),"TRB"]),na.rm=TRUE))
-  cat("Weighted ",i, ": ")
-  print(mean(scale(NCAA[is.element(NCAA$Player,rownames(compare[compare$weighted==i,])),"TRB"]),na.rm=TRUE))
-  
-  
-#  NCAA[is.element(NCAA$Player,rownames(compare[compare$clusters==i,])),"Position"]->group
-#  print(table(group))
-#  cat("Total: ",length(group), "\n")
-}
 
 
 
