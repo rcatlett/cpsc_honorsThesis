@@ -28,3 +28,14 @@ boxplot(avgEff[avgEff$year == 2,2], main = "2 Years College", ylim = c(-5,35))
 boxplot(avgEff[avgEff$year == 3,2], main = "3 Years College", ylim = c(-5,35))
 boxplot(avgEff[avgEff$year == 4,2], main = "4 Years College", ylim = c(-5,35))
 boxplot(avgEff[avgEff$year == 5,2], main = "5 Years College", ylim = c(-5,35))
+
+summarise(group_by(NCAA, Player), nYears=n(), last=max(Season)) -> lastYears
+before <- lastYears[lastYears$last<"2006-07",]
+after <- lastYears[lastYears$last>="2006-07",]
+merge(before, avgEff, by="Player") -> before
+merge(after, avgEff, by="Player") -> after
+before[,-5]->before
+after[,-5]->after
+
+cbind(noCoEff[,1], nYears=0, last=NA, noCoEff[,2]) -> noCoEff
+before <- rbind(before, noCoEff)

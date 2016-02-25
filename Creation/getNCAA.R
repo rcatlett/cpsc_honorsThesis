@@ -1,6 +1,6 @@
 require("XML")
 require("plyr")
-
+m <- 0
 NCAA <- data.frame()
 badnames <- c()
 links <- c()
@@ -49,7 +49,7 @@ for (i in 1:length(badnames)) {
 links <- links[-nums]
 
 cat("Getting player data\n")
-for (i in 1:length(links)) {
+for (i in 14572:length(links)) {
   if (i%%500 == 0){
     print(i)
   }
@@ -71,9 +71,10 @@ for (i in 1:length(links)) {
   if (position == "?"){
     position <- NA 
   }
+  cat("Have position\n")
   tables <- readHTMLTable(site, as.data.frame=TRUE)
   close(con)
-  
+  cat("Have tables\n")
   #Getting the name
   preName <- strsplit(links[i],"/")[[1]][6]
   p <- strsplit(preName,"[.-]")[[1]]
@@ -84,7 +85,7 @@ for (i in 1:length(links)) {
   
   #Reading the table in
   table <- cbind("Player"=name,"Position"=position, tables$players_totals)
-  
+  cat("Have table\n")
   #Editing the table
   #Get NAs in 
   for (i in 1:ncol(table)){
@@ -101,8 +102,11 @@ for (i in 1:length(links)) {
   for (i in 6:ncol(table)){
     as.double(table[,i]) -> table[,i]
   }
-  
+  cat("Formatted table\n")
   NCAA <- rbind.fill(NCAA, table)
+  print("added player ")
+  m <- m + 1
+  cat(m)
 }
 cat("Editing\n")
 NCAA[,-c(5,29:ncol(NCAA))]-> NCAA
@@ -110,4 +114,5 @@ NCAA <- tlb_df(NCAA)
 cat("Cleaning Environment\n")
 rm(table, con, htmlData, i, let, lines, links, name, num, nums, p,
    p_site, player, preName, site, step, tables)
+NCAA <- tbl_df(NCAA)
 cat("Done\n")

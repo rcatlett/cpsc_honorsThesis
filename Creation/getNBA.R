@@ -40,6 +40,12 @@ for (i in 5:ncol(NBA)) {
 for (i in 1:nrow(NBA)) {
   eff <- as.double((NBA[i,"PTS"] + NBA[i,"TR"] + NBA[i,"AS"] + NBA[i,"ST"] + NBA[i,"BK"] - (NBA[i, "FGA"]-NBA[i, "FGM"]) - (NBA[i,"FTA"]- NBA[i,"FTM"]) - NBA[i,"TO"])/NBA[i,"GP"])
   NBA[i, "EFF"] <- eff
+  name <- NBA$Player[i]
+  s <- strsplit(name, ",")[[1]]
+  for (j in 1:length(s)){
+    s[j] <- paste(toupper(substring(s[j], 1,1)), substring(s[j], 2),sep="", collapse=" ")
+  }
+   NBA[i,"Player"] <- paste(s[1], s[2], sep=', ', collapse="")
 }
 
 rm(information, file,  filenames, i, name, year, eff)
