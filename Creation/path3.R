@@ -1,3 +1,4 @@
+install.packages("colorspace")
 install.packages("dendextend")
 install.packages("corrplot")
 library(dendextend)
@@ -30,7 +31,7 @@ rownames(scaled.all) <- all.done.NCAA$Player
 weighted.all <- scaled.all
 # Now adjust for weights
 weighted.all$MPperG <- weighted.all$MPperG * 4
-weighted.all$PTS <- weighted.all$PTS * 2
+weighted.all$PTS <- weighted.all$PTS * 2 # May not weight as highly
 weighted.all$TRB <- weighted.all$TRB * 2
 weighted.all$AST <- weighted.all$AST * 2
 
