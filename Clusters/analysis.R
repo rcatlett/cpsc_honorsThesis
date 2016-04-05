@@ -20,6 +20,9 @@ for (i in seq(1:num_clusters)) {
       t.results <- t.test(fresh, other[,type])
       cat(": P-Value - ", t.results$p.value, " and Confidence Interval - ", t.results$conf.int)
       cat("\n")
+      if (t.results$p.value > 0.05) {
+        cat("There is a statistial difference.\n")
+      }
     }
     else {
       cat(": Not enough freshmen.\n")
