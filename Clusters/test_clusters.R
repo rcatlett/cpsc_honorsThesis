@@ -10,6 +10,10 @@ my_list <- c("Alford, Steve"   ,  "Anthony, Carmelo",  "Anthony, Greg" ,   "Batt
              "Sykes, Larry", "Taylor, Jeffery", "Teague, Marquis", "Thomas, Irving", "Thornton, Bob", "Turner, John", "Wade, Dwyane", "Wall, John", 
              "Webb, Marcus", "Wright, Antoine")
 
+job_set <- c("Anthony, Carmelo","Chambers, Tom" , "Cousins, Demarcus" ,  "Curry, Stephen"  ,  "Durant, Kevin"  , "Ewing, Patrick", "Goodwin, Archie"  , 
+             "Iverson, Allen",  "Liggins, Deandre",  "Livingston, Randy", "Love, Kevin",  "O'neal, Shaquille", "Irving, Kyrie","Wade, Dwyane", "Wall, John")
+
+my_list <- job_set
 
 # Collect OND and MND NCAA years
 summarise(group_by(NCAA, Player), S=min(Season))->f.year
@@ -74,21 +78,21 @@ hclust(f.dist) -> f.results
 #w/e; look at https://cran.r-project.org/web/views/Cluster.html
 #plot(as.dendrogram(fresh.results), hang= -1, horiz=T)
 
-clusters.fresh.5 = cutree(fresh.results, 5)
-clusters.fresh = cutree(fresh.results, 10)
-clusters.fresh.20 = cutree(fresh.results, 20)
+clusters.fresh.5 = cutree(fresh.results, 4)
+clusters.fresh = cutree(fresh.results, 4)
+clusters.fresh.20 = cutree(fresh.results, 4)
 names(clusters.fresh.5)<- freshman.year$Player
 names(clusters.fresh)<-freshman.year$Player
 names(clusters.fresh.20)<- freshman.year$Player
 
 
 compare_dendlist <- dendlist(as.dendrogram(fresh.results), as.dendrogram(f.results))
-names(compare_dendlist) <- c("Accepted", "Test")
+names(compare_dendlist) <- c("Not Weighted", "Weighted")
 
-compare <- cbind(clusters.fresh, cutree(f.results,10))
+compare <- cbind(clusters.fresh, cutree(f.results,4))
 compare <- as.data.frame(compare)
 
 compare_cor <- cor.dendlist(compare_dendlist)
 compare_dendlist %>% dendlist(which = c(1,2)) %>% 
-  untangle(method = "step2side") %>% set("branches_k_color", k=10) %>%
+  untangle(method = "step2side") %>% set("branches_k_color", k=4) %>%
   tanglegram()
